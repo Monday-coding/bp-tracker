@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Alert, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Alert, ActivityIndicator, Image } from 'react-native';
 import { getBPRecords, deleteBPRecord } from '../storage/bpStorage';
 import BPCard from '../components/BPCard';
 import LargeButton from '../components/LargeButton';
@@ -77,13 +77,27 @@ const HistoryScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>歷史記錄</Text>
-        <Text style={styles.headerSubtitle}>共 {records.length} 條記錄</Text>
+        <View style={styles.headerContent}>
+          <Image 
+            source={require('../assets/tutorial/logo.png')} 
+            style={styles.headerLogo}
+            resizeMode="contain"
+          />
+          <View>
+            <Text style={styles.headerTitle}>歷史記錄</Text>
+            <Text style={styles.headerSubtitle}>共 {records.length} 條記錄</Text>
+          </View>
+        </View>
       </View>
 
       <ScrollView style={styles.scrollContainer}>
         {records.length === 0 ? (
           <View style={styles.emptyContainer}>
+            <Image 
+              source={require('../assets/tutorial/logo.png')} 
+              style={styles.emptyLogo}
+              resizeMode="contain"
+            />
             <Text style={styles.emptyText}>還沒有記錄</Text>
             <Text style={styles.emptySubtext}>點擊下方按鈕開始記錄</Text>
           </View>
@@ -132,11 +146,21 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5F5F5',
   },
   header: {
-    backgroundColor: '#007AFF',
+    backgroundColor: '#4CAF50',
     padding: 24,
     paddingTop: 60,
+    paddingBottom: 32,
     borderBottomLeftRadius: 24,
     borderBottomRightRadius: 24,
+  },
+  headerContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  headerLogo: {
+    width: 64,
+    height: 64,
+    marginRight: 16,
   },
   headerTitle: {
     fontSize: 36,
@@ -146,7 +170,7 @@ const styles = StyleSheet.create({
   },
   headerSubtitle: {
     fontSize: 18,
-    color: '#E3F2FD',
+    color: '#E8F5E9',
   },
   centerContainer: {
     flex: 1,
@@ -166,6 +190,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 80,
+  },
+  emptyLogo: {
+    width: 200,
+    height: 200,
+    marginBottom: 24,
   },
   emptyText: {
     fontSize: 24,

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, Alert, Image } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import BPInput from '../components/BPInput';
 import LargeButton from '../components/LargeButton';
@@ -70,18 +71,20 @@ const RecordScreen = ({ navigation }) => {
       </View>
 
       <ScrollView style={styles.scrollContainer}>
-        <View style={styles.dateContainer}>
-          <TouchableOpacity onPress={() => setShowDatePicker(true)}>
-            <View style={styles.dateButton}>
-              <Text style={styles.dateLabel}>日期時間</Text>
+        <TouchableOpacity onPress={() => setShowDatePicker(true)} style={styles.dateContainer}>
+          <View style={styles.dateButton}>
+            <Ionicons name="calendar-outline" size={28} color="#007AFF" />
+            <View style={styles.dateInfo}>
+              <Text style={styles.dateLabel}>測量時間</Text>
               <View style={styles.dateValues}>
                 <Text style={styles.dateValue}>{formatDate(date)}</Text>
+                <Ionicons name="time-outline" size={20} color="#999999" />
                 <Text style={styles.timeValue}>{formatTime(date)}</Text>
               </View>
-              <Text style={styles.changeText}>點擊更改</Text>
             </View>
-          </TouchableOpacity>
-        </View>
+            <Ionicons name="chevron-forward" size={24} color="#CCCCCC" />
+          </View>
+        </TouchableOpacity>
 
         <BPInput
           label="收縮壓（高壓）"
@@ -106,11 +109,28 @@ const RecordScreen = ({ navigation }) => {
         />
 
         <View style={styles.tipsContainer}>
-          <Text style={styles.tipsTitle}>小提示</Text>
-          <Text style={styles.tipsText}>• 測量前請休息5分鐘</Text>
-          <Text style={styles.tipsText}>• 保持安靜，不要說話</Text>
-          <Text style={styles.tipsText}>• 手臂與心臟水平</Text>
-          <Text style={styles.tipsText}>• 每天同一時間測量更準確</Text>
+          <View style={styles.tipsHeader}>
+            <Ionicons name="bulb" size={24} color="#FF9800" />
+            <Text style={styles.tipsTitle}>測量小提示</Text>
+          </View>
+          <View style={styles.tipsList}>
+            <View style={styles.tipItem}>
+              <Ionicons name="checkmark-circle" size={20} color="#4CAF50" />
+              <Text style={styles.tipsText}>測量前請休息 5 分鐘</Text>
+            </View>
+            <View style={styles.tipItem}>
+              <Ionicons name="checkmark-circle" size={20} color="#4CAF50" />
+              <Text style={styles.tipsText}>保持安靜，不要說話</Text>
+            </View>
+            <View style={styles.tipItem}>
+              <Ionicons name="checkmark-circle" size={20} color="#4CAF50" />
+              <Text style={styles.tipsText}>手臂與心臟水平</Text>
+            </View>
+            <View style={styles.tipItem}>
+              <Ionicons name="checkmark-circle" size={20} color="#4CAF50" />
+              <Text style={styles.tipsText}>每天同一時間測量更準確</Text>
+            </View>
+          </View>
         </View>
       </ScrollView>
 
@@ -119,6 +139,7 @@ const RecordScreen = ({ navigation }) => {
           title={saving ? '保存中...' : '保存記錄'}
           onPress={handleSave}
           color="#4CAF50"
+          icon="save-outline"
           disabled={saving}
           style={styles.saveButton}
         />
@@ -126,6 +147,7 @@ const RecordScreen = ({ navigation }) => {
           title="取消"
           onPress={() => navigation.goBack()}
           color="#999999"
+          icon="close-circle-outline"
           style={styles.cancelButton}
         />
       </View>
@@ -184,55 +206,69 @@ const styles = StyleSheet.create({
   dateButton: {
     backgroundColor: '#FFFFFF',
     padding: 20,
-    borderRadius: 12,
+    borderRadius: 16,
+    flexDirection: 'row',
     alignItems: 'center',
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+    shadowRadius: 8,
+    elevation: 5,
+  },
+  dateInfo: {
+    flex: 1,
+    marginLeft: 12,
   },
   dateLabel: {
-    fontSize: 18,
+    fontSize: 16,
     color: '#666666',
-    marginBottom: 12,
+    marginBottom: 8,
   },
   dateValues: {
     flexDirection: 'row',
-    marginBottom: 8,
+    alignItems: 'center',
+    gap: 8,
   },
   dateValue: {
     fontSize: 24,
     fontWeight: 'bold',
     color: '#333333',
-    marginRight: 16,
   },
   timeValue: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#007AFF',
-  },
-  changeText: {
-    fontSize: 14,
+    fontSize: 20,
+    fontWeight: '600',
     color: '#007AFF',
   },
   tipsContainer: {
     backgroundColor: '#FFF3E0',
-    padding: 20,
-    borderRadius: 12,
+    padding: 24,
+    borderRadius: 16,
     marginTop: 24,
+  },
+  tipsHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    marginBottom: 16,
   },
   tipsTitle: {
     fontSize: 20,
     fontWeight: 'bold',
     color: '#FF9800',
-    marginBottom: 12,
+  },
+  tipsList: {
+    gap: 12,
+  },
+  tipItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
   },
   tipsText: {
     fontSize: 16,
     color: '#666666',
-    marginBottom: 6,
     lineHeight: 24,
+    flex: 1,
   },
   buttonContainer: {
     padding: 16,

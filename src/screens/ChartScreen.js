@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, ActivityIndicator, Image } from 'react-native';
 import { LineChart } from 'react-native-chart-kit';
 import { Dimensions } from 'react-native';
 import { getBPRecordsByDate } from '../storage/bpStorage';
@@ -58,7 +58,7 @@ const ChartScreen = ({ navigation }) => {
   if (loading) {
     return (
       <View style={styles.centerContainer}>
-        <ActivityIndicator size="large" color="#007AFF" />
+        <ActivityIndicator size="large" color="#9C27B0" />
         <Text style={styles.loadingText}>載入中...</Text>
       </View>
     );
@@ -69,7 +69,14 @@ const ChartScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>血壓趨勢</Text>
+        <View style={styles.headerContent}>
+          <Image 
+            source={require('../assets/tutorial/logo.png')} 
+            style={styles.headerLogo}
+            resizeMode="contain"
+          />
+          <Text style={styles.headerTitle}>血壓趨勢</Text>
+        </View>
       </View>
 
       <ScrollView style={styles.scrollContainer}>
@@ -112,6 +119,11 @@ const ChartScreen = ({ navigation }) => {
           </View>
         ) : (
           <View style={styles.emptyContainer}>
+            <Image 
+              source={require('../assets/tutorial/logo.png')} 
+              style={styles.emptyLogo}
+              resizeMode="contain"
+            />
             <Text style={styles.emptyText}>沒有數據可顯示</Text>
             <Text style={styles.emptySubtext}>請先記錄一些血壓數據</Text>
           </View>
@@ -125,7 +137,7 @@ const ChartScreen = ({ navigation }) => {
                 key={days}
                 title={`${days}天`}
                 onPress={() => setDateRange(days)}
-                color={dateRange === days ? '#007AFF' : '#CCCCCC'}
+                color={dateRange === days ? '#9C27B0' : '#CCCCCC'}
                 style={styles.dateRangeButton}
               />
             ))}
@@ -205,11 +217,21 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5F5F5',
   },
   header: {
-    backgroundColor: '#007AFF',
+    backgroundColor: '#9C27B0',
     padding: 24,
     paddingTop: 60,
+    paddingBottom: 32,
     borderBottomLeftRadius: 24,
     borderBottomRightRadius: 24,
+  },
+  headerContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  headerLogo: {
+    width: 64,
+    height: 64,
+    marginRight: 16,
   },
   headerTitle: {
     fontSize: 36,
@@ -272,6 +294,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 24,
   },
+  emptyLogo: {
+    width: 200,
+    height: 200,
+    marginBottom: 24,
+  },
   emptyText: {
     fontSize: 20,
     color: '#666666',
@@ -327,7 +354,7 @@ const styles = StyleSheet.create({
   statValue: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#007AFF',
+    color: '#9C27B0',
   },
   buttonContainer: {
     padding: 16,

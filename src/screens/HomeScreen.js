@@ -59,13 +59,19 @@ const HomeScreen = ({ navigation }) => {
 
       {records.length > 0 && average && (
         <View style={styles.averageContainer}>
-          <Text style={styles.averageTitle}>最近平均</Text>
+          <View style={styles.averageHeader}>
+            <Ionicons name="analytics-outline" size={24} color="#007AFF" />
+            <Text style={styles.averageTitle}>最近平均</Text>
+          </View>
           <View style={styles.averageReading}>
             <Text style={styles.averageValue}>{average.systolic}</Text>
             <Text style={styles.averageSeparator}>/</Text>
             <Text style={styles.averageValue}>{average.diastolic}</Text>
             {average.pulse > 0 && (
-              <Text style={styles.averagePulse}>| {average.pulse} bpm</Text>
+              <View style={styles.pulseBadge}>
+                <Ionicons name="heart" size={16} color="#FF9800" />
+                <Text style={styles.averagePulse}>{average.pulse}</Text>
+              </View>
             )}
           </View>
         </View>
@@ -81,6 +87,13 @@ const HomeScreen = ({ navigation }) => {
             />
             <Text style={styles.emptyText}>還沒有記錄</Text>
             <Text style={styles.emptySubtext}>點擊下方按鈕開始記錄</Text>
+            <TouchableOpacity 
+              style={styles.emptyButton}
+              onPress={() => navigation.navigate('Tutorial')}
+            >
+              <Ionicons name="school-outline" size={20} color="#007AFF" />
+              <Text style={styles.emptyButtonText}>查看使用教學</Text>
+            </TouchableOpacity>
           </View>
         ) : (
           <>
@@ -101,12 +114,14 @@ const HomeScreen = ({ navigation }) => {
           title="+ 記錄血壓"
           onPress={() => navigation.navigate('Record')}
           color="#007AFF"
+          icon="add-circle"
           style={styles.primaryButton}
         />
         <LargeButton
           title="歷史記錄"
           onPress={() => navigation.navigate('History')}
           color="#4CAF50"
+          icon="list-outline"
           style={styles.secondaryButton}
         />
       </View>
@@ -163,19 +178,24 @@ const styles = StyleSheet.create({
   averageContainer: {
     backgroundColor: '#FFFFFF',
     margin: 16,
-    padding: 20,
-    borderRadius: 12,
+    padding: 24,
+    borderRadius: 20,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+    shadowRadius: 8,
+    elevation: 5,
+  },
+  averageHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    marginBottom: 12,
   },
   averageTitle: {
     fontSize: 18,
     color: '#666666',
-    textAlign: 'center',
-    marginBottom: 12,
+    fontWeight: '600',
   },
   averageReading: {
     flexDirection: 'row',
@@ -191,12 +211,22 @@ const styles = StyleSheet.create({
     fontSize: 36,
     fontWeight: 'bold',
     color: '#CCCCCC',
-    marginHorizontal: 8,
+    marginHorizontal: 12,
+  },
+  pulseBadge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    backgroundColor: '#FFF3E0',
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 12,
+    marginLeft: 12,
   },
   averagePulse: {
-    fontSize: 20,
-    color: '#666666',
-    marginLeft: 8,
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#FF9800',
   },
   scrollContainer: {
     flex: 1,
@@ -220,6 +250,21 @@ const styles = StyleSheet.create({
   emptySubtext: {
     fontSize: 16,
     color: '#999999',
+    marginBottom: 24,
+  },
+  emptyButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    backgroundColor: '#E3F2FD',
+    paddingHorizontal: 24,
+    paddingVertical: 12,
+    borderRadius: 12,
+  },
+  emptyButtonText: {
+    fontSize: 18,
+    color: '#007AFF',
+    fontWeight: '600',
   },
   buttonContainer: {
     padding: 16,

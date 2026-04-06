@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, Alert } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Alert, Image } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import BPInput from '../components/BPInput';
 import LargeButton from '../components/LargeButton';
@@ -59,7 +59,14 @@ const RecordScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>記錄血壓</Text>
+        <View style={styles.headerContent}>
+          <Image 
+            source={require('../assets/tutorial/logo.png')} 
+            style={styles.headerLogo}
+            resizeMode="contain"
+          />
+          <Text style={styles.headerTitle}>記錄血壓</Text>
+        </View>
       </View>
 
       <ScrollView style={styles.scrollContainer}>
@@ -149,8 +156,18 @@ const styles = StyleSheet.create({
     backgroundColor: '#007AFF',
     padding: 24,
     paddingTop: 60,
+    paddingBottom: 24,
     borderBottomLeftRadius: 24,
     borderBottomRightRadius: 24,
+  },
+  headerContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  headerLogo: {
+    width: 56,
+    height: 56,
+    marginRight: 16,
   },
   headerTitle: {
     fontSize: 36,

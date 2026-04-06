@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, ActivityIndicator, Image } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { getLatestRecords, calculateAverageBP } from '../storage/bpStorage';
 import BPCard from '../components/BPCard';
 import LargeButton from '../components/LargeButton';
@@ -40,8 +41,20 @@ const HomeScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>血壓記錄</Text>
-        <Text style={styles.headerSubtitle}>為您的健康把关</Text>
+        <View style={styles.headerLeft}>
+          <Image 
+            source={require('../assets/tutorial/logo.png')} 
+            style={styles.headerLogo}
+            resizeMode="contain"
+          />
+          <View>
+            <Text style={styles.headerTitle}>血壓記錄</Text>
+            <Text style={styles.headerSubtitle}>為您的健康把关</Text>
+          </View>
+        </View>
+        <TouchableOpacity onPress={() => navigation.navigate('Tutorial')} style={styles.helpButton}>
+          <Ionicons name="help-circle-outline" size={32} color="#FFFFFF" />
+        </TouchableOpacity>
       </View>
 
       {records.length > 0 && average && (
@@ -61,6 +74,11 @@ const HomeScreen = ({ navigation }) => {
       <ScrollView style={styles.scrollContainer}>
         {records.length === 0 ? (
           <View style={styles.emptyContainer}>
+            <Image 
+              source={require('../assets/tutorial/logo.png')} 
+              style={styles.emptyLogo}
+              resizeMode="contain"
+            />
             <Text style={styles.emptyText}>還沒有記錄</Text>
             <Text style={styles.emptySubtext}>點擊下方按鈕開始記錄</Text>
           </View>
@@ -105,8 +123,19 @@ const styles = StyleSheet.create({
     backgroundColor: '#007AFF',
     padding: 24,
     paddingTop: 60,
+    paddingBottom: 32,
     borderBottomLeftRadius: 24,
     borderBottomRightRadius: 24,
+  },
+  headerLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flex: 1,
+  },
+  headerLogo: {
+    width: 64,
+    height: 64,
+    marginRight: 16,
   },
   headerTitle: {
     fontSize: 36,
@@ -117,6 +146,9 @@ const styles = StyleSheet.create({
   headerSubtitle: {
     fontSize: 18,
     color: '#E3F2FD',
+  },
+  helpButton: {
+    padding: 8,
   },
   centerContainer: {
     flex: 1,
@@ -174,6 +206,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 80,
+  },
+  emptyLogo: {
+    width: 200,
+    height: 200,
+    marginBottom: 24,
   },
   emptyText: {
     fontSize: 24,
